@@ -1,0 +1,45 @@
+
+
+.home-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.float-left {
+    width: 20%;
+    position: relative;
+}
+
+.float-right {
+    width: 80%;
+    background: #fafafa;
+    text-align: center;
+    justify-content: center;
+}
+
+.title-container {
+    margin-top: 35px;
+}
+
+.logout-container {
+    position: absolute;
+    bottom: 5%;
+    width: 100%;
+    text-align: center;
+}
+
+.signout-btn {
+    font-size: 20px !important;
+    color: #fff1c1 !important;
+}
+
+.chat-card {
+    /* height: 300px;
+    margin: auto 16em; */
+}
