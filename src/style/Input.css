@@ -1,0 +1,14 @@
+.continue-btn {
+    color: #004445 !important;
+    border: none !important;
+    background: #fff1c1 !important;
+    height: 45px;
+}
+
+.continue-btn:hover {
+    background: #fde994 !important;
+}
+
+.option-text {
+    color: #fff1c1;
+}

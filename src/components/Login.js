@@ -37,7 +37,7 @@ const Login = () => {
                     <Form onSubmit={handleSubmit}>
                         <FloatingLabel
                             controlId="floatingInput"
-                            label="Email address"
+                            label="Email"
                             className="mb-3 custom-label"
                         >
                             <Form.Control type="email" placeholder="name@example.com" ref={emailRef} required />
@@ -49,7 +49,7 @@ const Login = () => {
                         >
                             <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
                         </FloatingLabel>
-                        <Button disabled={loading} className="w-100" type="submit">Continue</Button>
+                        <Button disabled={loading} className="w-100 continue-btn" type="submit">Continue</Button>
                     </Form>
 
                     <div className="w-100 text-center mt-3">
@@ -57,7 +57,7 @@ const Login = () => {
                     </div>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
+            <div className="w-100 text-center mt-2 option-text">
                 Need an account? <Link to="/signup">Sign Up</Link>
             </div>
         </>

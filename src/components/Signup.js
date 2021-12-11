@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, FloatingLabel } from "react-bootstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from "../contexts/AuthContext";
 
@@ -34,32 +34,44 @@ const Signup = () => {
 
     return (
         <>
-            <Card>
-                <Card.Body>
-                    <Card.Text className="title-font" style={{color: "#fff1c1"}}>TeamPro</Card.Text>
+            <Card className="border-0">
+                <Card.Body className="card-background">
+                    <Card.Text className="text-center title-font" style={{color: "#fff1c1"}}>TeamPro</Card.Text>
                     {error && <Alert variant="danger">{error}</Alert>}
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group id="name">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="name" ref={nameRef} required />
-                        </Form.Group>
-                        <Form.Group id="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required />
-                        </Form.Group>
-                        <Form.Group id="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" ref={passwordRef} required />
-                        </Form.Group>
-                        <Form.Group id="password-confirm">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control type="password" ref={passwordConfirmRef} required />
-                        </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Continue</Button>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Name"
+                            className="mb-3 custom-label"
+                        >
+                            <Form.Control type="name" placeholder="Name" ref={nameRef} required />
+                        </FloatingLabel>
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label="Email"
+                            className="mb-3 custom-label"
+                        >
+                            <Form.Control type="email" placeholder="name@example.com" ref={emailRef} required />
+                        </FloatingLabel>
+                        <FloatingLabel 
+                            controlId="floatingPassword" 
+                            label="Password"
+                            className="mb-3"
+                        >
+                            <Form.Control type="password" placeholder="Password" ref={passwordRef} required/>
+                        </FloatingLabel>
+                        <FloatingLabel 
+                            controlId="floatingPassword" 
+                            label="Password"
+                            className="mb-3"
+                        >
+                            <Form.Control type="password" placeholder="Password" ref={passwordConfirmRef} required/>
+                        </FloatingLabel>
+                        <Button disabled={loading} className="w-100 continue-btn" type="submit">Continue</Button>
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
+            <div className="w-100 text-center mt-2 option-text">
                 Already have an account? <Link to="/login">Log In</Link>
             </div>
         </>

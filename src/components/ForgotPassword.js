@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, FloatingLabel } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import { useAuth } from "../contexts/AuthContext";
 
@@ -29,24 +29,27 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <Card>
-                <Card.Body>
-                    <h2 className="text-center mt-4">TeamPro</h2>
+            <Card className="border-0">
+                <Card.Body className="card-background">
+                    <Card.Text className="text-center title-font" style={{color: "#fff1c1"}}>TeamPro</Card.Text>
                     {error && <Alert variant="danger">{error}</Alert>}
                     {message && <Alert variant="success">{message}</Alert>}
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group id="email">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" ref={emailRef} required />
-                        </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">Reset Password</Button>
+                    <FloatingLabel
+                            controlId="floatingInput"
+                            label="Email"
+                            className="mb-3 custom-label"
+                        >
+                            <Form.Control type="email" placeholder="name@example.com" ref={emailRef} required />
+                        </FloatingLabel>
+                        <Button disabled={loading} className="w-100 continue-btn" type="submit">Reset Password</Button>
                     </Form>
-                    <div className="w-100 text-center mt-3">
-                        <Link to="/login">Log In</Link>
-                    </div>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
+            <div className="w-100 text-center mt-2 option-text">
+            Already have an account? <Link to="/login">Log In</Link>
+            </div>
+            <div className="w-100 text-center mt-2 option-text">
                 Need an account? <Link to="/signup">Sign Up</Link>
             </div>
         </>
