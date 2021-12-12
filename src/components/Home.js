@@ -3,6 +3,7 @@ import "../style/Home.css";
 import { Alert, Button, Card, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import ChatRoom from './ChatRoom';
 
 const Home = () => {
     const [ error, setError ] = useState("");
@@ -34,7 +35,7 @@ const Home = () => {
                 <Container className="d-flex align-items-center justify-content-center" >
                 <Card className="chat-card">
                     <Card.Body>
-                    <h1>somthing</h1>
+                        <ChatRoom />
                     </Card.Body>
                 </Card>
                 </Container>

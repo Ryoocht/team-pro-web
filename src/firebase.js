@@ -13,6 +13,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const db = firebase.firestore();
-
-export {auth, db}
+const firestore = firebase.firestore();
+// console.log(auth.createUserWithEmailAndPassword("ryochitanaka@teampro.com", "123456"))
+export {auth, firestore}
