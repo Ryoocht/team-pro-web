@@ -38,16 +38,17 @@
     color: #fff1c1 !important;
 }
 
-/* .chat-card { */
-    /* height: 300px;
-    margin: auto 16em; */
-/* } */
+.chat-card {
+    height: 100%;
+    /* margin: auto 16em; */
+} 
 
 .select-all-btn {
     height: 30px;
     padding: 2px 15px 4px 15px !important;
     font-size: 16px !important;
     background: #004445 !important;
+    border: none !important;
 }
 
 /* User Table */

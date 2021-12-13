@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 const ChatRoom = () => {
     const { currentUser } = useAuth();
     const [ userNames, setUserNames ] = useState([]);
+    const titleRef = useRef("");
     const messageRef = useRef("");
     const [ selectedUsers, setSelectedUsers ] = useState([]);
     let msgTo = userList => {
@@ -37,27 +38,58 @@ const ChatRoom = () => {
         });
     },[]);
 
-    const handleClick = e => {
-        const selectedBox = document.getElementById(e.target.id);
-        const firstName = e.target.id.split(" ")[0];
+    const handleSelectAll = e => {
+        const selectAllBtn = document.getElementById(e.target.id);
+        const allCheckBoxies = document.getElementsByName("select-all");
+        const toggleBtn = e.target.id;
+        setSelectedUsers("");
 
-        if (selectedBox.className === "") {
-            setSelectedUsers([...selectedUsers, firstName]);
-            selectedBox.className = "selected";
-        } else {
-            console.log(firstName);
-            const findUser = selectedUsers.find(user => {
-                console.log("Selected User List: ", user)
-                // if user === firstname then update selectedUser
-                user = firstName
+        if (toggleBtn === "deselect") {
+            allCheckBoxies.forEach(checkbox => {
+                checkbox.checked = true;
+                const selectedUid = checkbox.parentNode.id;
+                const firstName = checkbox.id.split(" ")[0];
+                setSelectedUsers(prevState => [...prevState, {firstName:firstName, uid: selectedUid}]);
             });
-            console.log(findUser);
-            selectedBox.className = "";
+            selectAllBtn.id = "select";
+        } else {
+            allCheckBoxies.forEach(checkbox => {
+                checkbox.checked = false;
+                setSelectedUsers([]);
+            });
+            selectAllBtn.id = "deselect";
         }
     }
 
+    const handleClick = e => {
+        const selectedBox = document.getElementById(e.target.id);
+        const selectedUid = selectedBox.parentNode.id;
+        const firstName = e.target.id.split(" ")[0];
+
+        if (selectedBox.checked) {
+            setSelectedUsers([...selectedUsers, {firstName: firstName, uid: selectedUid}]);
+        } else {
+            const findUser = selectedUsers.filter(user => {
+                return user.firstName !== firstName
+            });
+            setSelectedUsers(findUser);
+        }
+    }
+
+    const handleSendMessage = () => {
+        firestore.collection("messages").add({
+            title: titleRef.current.value,
+            message: messageRef.current.value,
+            createdAt: new Date(),
+            sender: currentUser.uid,
+            receiver: selectedUsers.map(user => user.uid)
+        })
+        .then(result => alert("The Message has been sent!"))
+        .catch(error => console.error(error));
+    }
+
     if (currentUser) {
-        let userList = selectedUsers.map(user => user);
+        let userList = selectedUsers.map(user => user.firstName);
         return (
             <div className="holder">
                 <table width="100%">
@@ -67,7 +99,7 @@ const ChatRoom = () => {
                                 <h3>The Team</h3>
                             </td>
                             <td colSpan="1">
-                            <Button as="input" type="button" value="Select All" className="select-all-btn" />
+                            <Button as="input" type="button" value="Select All" className="select-all-btn" id="deselect" onClick={handleSelectAll} />
                             </td>
                         </tr>
                     </thead>
@@ -81,7 +113,7 @@ const ChatRoom = () => {
                                         </td>
                                         <td>{userName.username}</td>
                                         <td id={userName.uid}>
-                                            <input type="checkbox" id={userName.username} onChange={handleClick} className=""/>
+                                            <input type="checkbox" name="select-all" id={userName.username} onChange={handleClick} />
                                             <span></span>
                                         </td>
                                     </tr>
@@ -90,7 +122,7 @@ const ChatRoom = () => {
                         })}
                         <tr>
                             <td colSpan="3">
-                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="1" ref={messageRef} value={msgTo(userList.join(", "))}>
+                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="1" ref={titleRef} value={msgTo(userList.join(", "))}>
                                 </textarea>
                             </td>
                         </tr>
@@ -102,7 +134,7 @@ const ChatRoom = () => {
                         </tr>
                         <tr>
                             <td colSpan="3">
-                                <input type="submit" value="Send Message" />
+                                <input type="submit" value="Send Message" onClick={handleSendMessage} />
                             </td>
                         </tr>
                         </tbody>

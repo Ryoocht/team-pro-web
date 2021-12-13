@@ -32,8 +32,8 @@ const Home = () => {
                 </div>
             </div>
             <div className="float-right ">
-                <Container className="d-flex align-items-center justify-content-center" >
-                <Card className="chat-card">
+                <Container className="d-flex align-items-center justify-content-center chat-card" >
+                <Card>
                     <Card.Body>
                         <ChatRoom />
                     </Card.Body>
