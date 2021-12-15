@@ -21,14 +21,13 @@ function App() {
               <Route exact path="/signup" element={<Signup />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/forgot-password" element={<ForgotPassword />} />
-              {/* <Route 
+              <Route 
                 exact path="/home" 
                 element={
                   <PrivateRoute>
                     <Home />
                   </PrivateRoute>
-                } /> */}
-                <Route exact path="/home" element={<Home />}/>
+                } />
             </Routes>
           </AuthProvider>
         </Router>

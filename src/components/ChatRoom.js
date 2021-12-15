@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import "../style/Home.css";
-import { firestore, onMessageListner } from '../firebase';
+import { firestore } from '../firebase';
 import { useAuth } from "../contexts/AuthContext";
 import UserIcon from "../image/user-solid.svg";
 import { Button } from "react-bootstrap";
-import Notifications from './Notifications';
 
 const ChatRoom = () => {
     const { currentUser } = useAuth();
@@ -16,7 +15,6 @@ const ChatRoom = () => {
         return `Hey ${userList}!`;
     }
     const defMsg = "I am sending you a message :)\n\nBye!";
-    const [ notification, setNotification ] = useState({title: "", body: ""});
 
     useEffect(() => {
         setUserNames([""]);
@@ -38,16 +36,6 @@ const ChatRoom = () => {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-
-        // onMessageListner()
-        // .then(payload => {
-        //     setNotification({
-        //         title: payload.notification.title,
-        //         body: payload.notification.body,
-        //     });
-        //     console.log(payload);
-        // })
-        // .catch(error => console.log("failed: ", error));
     },[]);
 
     const handleSelectAll = e => {
@@ -157,7 +145,6 @@ const ChatRoom = () => {
                             </td>
                         </tr>
                 </table>
-                <Notifications />
             </div>
         );
     } else {
