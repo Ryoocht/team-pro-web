@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import "../style/Home.css";
-import { firestore } from '../firebase';
+import { firestore, onMessageListner } from '../firebase';
 import { useAuth } from "../contexts/AuthContext";
 import UserIcon from "../image/user-solid.svg";
-import { Button } from "react-bootstrap"; 
+import { Button } from "react-bootstrap";
+import Notifications from './Notifications';
 
 const ChatRoom = () => {
     const { currentUser } = useAuth();
@@ -14,7 +15,8 @@ const ChatRoom = () => {
     let msgTo = userList => {
         return `Hey ${userList}!`;
     }
-    const defMsg = "I am sending you a message :)\n\nBye!"
+    const defMsg = "I am sending you a message :)\n\nBye!";
+    const [ notification, setNotification ] = useState({title: "", body: ""});
 
     useEffect(() => {
         setUserNames([""]);
@@ -36,6 +38,16 @@ const ChatRoom = () => {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
+
+        // onMessageListner()
+        // .then(payload => {
+        //     setNotification({
+        //         title: payload.notification.title,
+        //         body: payload.notification.body,
+        //     });
+        //     console.log(payload);
+        // })
+        // .catch(error => console.log("failed: ", error));
     },[]);
 
     const handleSelectAll = e => {
@@ -95,19 +107,22 @@ const ChatRoom = () => {
                 <table width="100%">
                     <thead>
                         <tr>
-                            <td colSpan="2">
+                            <td className="table-title">
                                 <h3>The Team</h3>
                             </td>
-                            <td colSpan="1">
+                            <td className="table-select">
                             <Button as="input" type="button" value="Select All" className="select-all-btn" id="deselect" onClick={handleSelectAll} />
                             </td>
                         </tr>
                     </thead>
+                </table>
+                <div className="user-list-table">
+                <table>
                     <tbody>
                         {userNames.map(userName => {
                             if (currentUser.uid !== userName.uid && userName) {
                                 return (
-                                    <tr key={userName.uid} rows="8">
+                                    <tr key={userName.uid} rows="6">
                                         <td>
                                             <img src={UserIcon} alt="user-icon" className="user-icon"></img>
                                         </td>
@@ -120,6 +135,10 @@ const ChatRoom = () => {
                                 )
                             }
                         })}
+                    </tbody>
+                </table>
+                </div>
+                    <table width="100%">
                         <tr>
                             <td colSpan="3">
                                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="1" ref={titleRef} value={msgTo(userList.join(", "))}>
@@ -137,8 +156,8 @@ const ChatRoom = () => {
                                 <input type="submit" value="Send Message" onClick={handleSendMessage} />
                             </td>
                         </tr>
-                        </tbody>
                 </table>
+                <Notifications />
             </div>
         );
     } else {

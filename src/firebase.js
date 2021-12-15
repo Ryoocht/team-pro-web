@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/messaging';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -14,5 +15,33 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-// console.log(auth.createUserWithEmailAndPassword("ryochitanaka@teampro.com", "123456"))
-export {auth, firestore}
+const messaging = firebase.messaging();
+const messagingConfig = {vapidKey: process.env.REACT_APP_VAPID_KEY};
+const publicKey = messagingConfig;
+
+export const getToken = async (setTokenFound) => {
+  let currentToken = "";
+  console.log(publicKey)
+  try {
+    currentToken = await messaging.getToken({ vapidKey: publicKey });
+    if (currentToken) {
+      console.log("currentToken is TRUE")
+      setTokenFound(true);
+    } else {
+      console.log("currentToken is FALSE")
+      setTokenFound(false);
+    }
+  } catch(error) {
+    console.log("An error occurred while retrieving token. ", error);
+  }
+
+  return currentToken;
+}
+
+// export const onMessageListner = () => {
+//   new Promise( resolve => {
+//     messaging.onMessage( payload => resolve(payload));
+//   });
+// }
+
+export { auth, firestore }
