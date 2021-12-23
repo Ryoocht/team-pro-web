@@ -14,7 +14,7 @@ function App() {
   return (
     <Container className="d-flex align-items-center justify-content-center vw-100 vh-100" style={{background: "#004445"}}>
       <div className="w-100" style={{ maxWidth: "400px" }}>
-        <Router>
+        <Router basename='/team-pro-web'>
           <AuthProvider>
             <Routes>
               <Route exact path="/" element={<Title />} />
